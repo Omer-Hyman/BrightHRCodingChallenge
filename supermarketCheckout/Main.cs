@@ -6,17 +6,19 @@ public interface ICheckout
 
 public class Till : ICheckout
 {
-    private Item[] AvailableItems = [
+    public Item[] AvailableItems = [
         new Item("A", 50, [3, 130]),
         new Item("B", 50, [2, 45]),
         new Item("C", 50, null),
         new Item("D", 50, null)
     ];
-    public Item[] ShoppingBasket = [];
+    public List<Item> ShoppingBasket = new List<Item>();
 
     public void Scan(string itemName)
     {
-        
+        var arraySearch = Array.Find(AvailableItems, element => element.Name == itemName);
+        if(arraySearch != null)
+            ShoppingBasket.Add(arraySearch);
     }
 
     public int GetTotalPrice()
@@ -27,9 +29,9 @@ public class Till : ICheckout
 
 public class Item
 {
-    string Name;
-    int UnitPrice;
-    int[]? SpecialPrice;
+    public string Name;
+    public int UnitPrice;
+    public int[]? SpecialPrice;
 
     public Item(string name, int unitPrice, int[]? specialPrice)
     {
@@ -43,6 +45,7 @@ class Program
 {
     static void Main()
     {
-        
+        Till till = new Till();
+        till.Scan("A");
     }
 }
