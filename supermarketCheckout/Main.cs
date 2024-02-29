@@ -1,16 +1,22 @@
 public interface ICheckout
 {
-    public void Scan(Item item);
+    public void Scan(string itemName);
     public int GetTotalPrice();
 }
 
 public class Till : ICheckout
 {
-    private Item[] ShoppingBasket = [];
+    private Item[] AvailableItems = [
+        new Item("A", 50, [3, 130]),
+        new Item("B", 50, [2, 45]),
+        new Item("C", 50, null),
+        new Item("D", 50, null)
+    ];
+    public Item[] ShoppingBasket = [];
 
-    public void Scan(Item item)
+    public void Scan(string itemName)
     {
-    
+        
     }
 
     public int GetTotalPrice()
@@ -37,9 +43,6 @@ class Program
 {
     static void Main()
     {
-        Item a = new Item("A", 50, [3, 130]);
-        Item b = new Item("B", 50, [2, 45]);
-        Item c = new Item("C", 50, null);
-        Item d = new Item("D", 50, null);
+        
     }
 }

@@ -97,3 +97,4 @@ C:\Users\User\Desktop\Omer C# coding test\supermarketCheckout\obj\Debug\net8.0\r
 C:\Users\User\Desktop\Omer C# coding test\supermarketCheckout\obj\Debug\net8.0\supermarketCheckout.pdb
 C:\Users\User\Desktop\Omer C# coding test\supermarketCheckout\obj\Debug\net8.0\supermarketCheckout.genruntimeconfig.cache
 C:\Users\User\Desktop\Omer C# coding test\supermarketCheckout\obj\Debug\net8.0\ref\supermarketCheckout.dll
+C:\Users\User\Desktop\Omer C# coding test\supermarketCheckout\obj\Debug\net8.0\supermarketCheckout.sourcelink.json
