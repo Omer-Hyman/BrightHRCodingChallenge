@@ -10,9 +10,9 @@ public class Till : ICheckout
 {
     public Item[] AvailableItems = [
         new Item("A", 50, [3, 130]),
-        new Item("B", 50, [2, 45]),
-        new Item("C", 50, null),
-        new Item("D", 50, null)
+        new Item("B", 30, [2, 45]),
+        new Item("C", 20, null),
+        new Item("D", 15, null)
     ];
     public List<Item> ShoppingBasket = new List<Item>();
 
@@ -26,30 +26,28 @@ public class Till : ICheckout
     public int GetTotalPrice()
     {
         int totalPrice = 0;
-        List<int> visited = new List<int>();
+        List<string> visited = new List<string>();
+
         foreach (var item in ShoppingBasket)
         {
-            if (item.SpecialPrice == null)
+            totalPrice += item.UnitPrice;
+
+            if (visited.Contains(item.Name))
+                continue;
+            
+            visited.Add(item.Name);
+
+            if (item.SpecialPrice != null)
             {
-                totalPrice += item.UnitPrice;
-            }
-            else
-            {
-                var quantity = item.SpecialPrice[0];
                 var duplicateItems = ShoppingBasket.FindAll(itemToFind => itemToFind.Name == item.Name);
-                Console.WriteLine(item.Name);
-                Console.WriteLine(duplicateItems.Count);
-
-                int discountReduction = (item.UnitPrice * item.SpecialPrice[0]) - item.SpecialPrice[1];
-                int numberOfDiscounts = duplicateItems.Count / quantity;
-
-                // can't subtract the discount from the total right here because it will 
-                // remove it again the next time it hits the same item
                 
-                // Can't remove items from the list because it is being looped through
-                // maybe a visited list is needed? 
+                int discountAmount = (item.UnitPrice * item.SpecialPrice[0]) - item.SpecialPrice[1];
+                int numberOfDiscounts = duplicateItems.Count / item.SpecialPrice[0];
+
+                totalPrice -= discountAmount * numberOfDiscounts;
             }
         }
+        Console.WriteLine("Total Price: " + totalPrice);
         return totalPrice;
     }
 }
@@ -75,8 +73,9 @@ class Program
         Till till = new Till();
         till.Scan("A");
         till.Scan("B");
+        till.Scan("A");
         till.Scan("B");
-        till.Scan("D");    
+        till.Scan("A"); 
         till.GetTotalPrice();
     }
 }
