@@ -85,7 +85,7 @@ public class UnitTests
 
         Assert.Equal(115, totalPrice);
     }
-    
+
     [Fact]
     public void CalculateTotalPrice_SingleDiscount()
     {

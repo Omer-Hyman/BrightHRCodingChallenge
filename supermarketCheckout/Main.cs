@@ -50,6 +50,88 @@ public class Till : ICheckout
         Console.WriteLine("Total Price: " + totalPrice);
         return totalPrice;
     }
+
+    public void InputCustomPricing()
+    {
+        string name;
+        int unitPrice;
+        int multiBuyQuantity;
+        int multiBuyPrice;
+        bool repeat = true; 
+        
+        Console.WriteLine("Do you want to add or change any pricing rules? (y/n)");
+        var userInput = Console.ReadLine();
+
+        if (userInput?.ToLower() != "y" )
+            return;
+
+        while(repeat)
+        {
+            Console.WriteLine("What's the name of the item you would like to add or edit? (Must be only one letter!)");
+            userInput = Console.ReadLine();
+
+            if (!(userInput?.Length == 1 && char.IsLetter(userInput[0])))
+                return;
+            
+            name = userInput;
+
+            Console.WriteLine("What's the unit price for " + name + "? (Whole positive numbers only!)");
+            userInput = Console.ReadLine();
+
+            if (!(int.TryParse(userInput, out int number) && number > 0))
+                return;
+                
+            unitPrice = number;
+            
+            Console.WriteLine("Should " + name + " have a multibuy offer? (y/n)");
+            userInput = Console.ReadLine();
+
+            if (userInput?.ToLower() == "y")
+            {
+                Console.WriteLine("How many of this item must the customer purchase for the discount to apply? (Whole positive numbers only!)");
+                userInput = Console.ReadLine();
+
+                if (!(int.TryParse(userInput, out int num) && num > 0))
+                    return;
+                
+                multiBuyQuantity = num;
+
+                Console.WriteLine($"What should the price be for {multiBuyQuantity} {name}'s? (Whole positive numbers only!)");
+                userInput = Console.ReadLine();
+
+                if (!(int.TryParse(userInput, out int price) && price > 0))
+                    return;
+                
+                multiBuyPrice = price;
+
+                Item item = new Item(name, unitPrice, [multiBuyQuantity, multiBuyPrice]);
+                UpdateAvailableItems(item);
+            }
+            else if (userInput?.ToLower() == "n")
+            {
+                Item item = new Item(name, unitPrice, null);
+                UpdateAvailableItems(item);
+            }
+
+            Console.WriteLine("Do you want to add or edit another item? (y/n)");
+            userInput = Console.ReadLine();
+
+            if (userInput?.ToLower() != "y" )
+                repeat = false;
+        }
+    }
+
+    private void UpdateAvailableItems(Item item)
+    {
+
+        var itemIndex = Array.FindIndex(AvailableItems, x => x.Name == item.Name);
+        // var itemToFind = Array.Find(AvailableItems, x => x.Name == item.Name);
+
+        if (itemIndex == -1)
+            AvailableItems.Append(item);
+        else
+            AvailableItems[itemIndex] = item;
+    }
 }
 
 public class Item
@@ -71,11 +153,12 @@ class Program
     static void Main()
     {
         Till till = new Till();
+        till.InputCustomPricing();
         till.Scan("A");
         till.Scan("B");
         till.Scan("A");
         till.Scan("B");
-        till.Scan("A"); 
-        till.GetTotalPrice();
+        till.Scan("A");
+        Console.WriteLine(till.GetTotalPrice());
     }
 }
