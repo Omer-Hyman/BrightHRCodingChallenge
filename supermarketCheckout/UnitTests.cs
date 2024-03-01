@@ -71,4 +71,84 @@ public class UnitTests
 
         Assert.Equal(3, till.ShoppingBasket.Count);
     }
+
+    [Fact]
+    public void CalculateTotalPrice_NoDiscounts()
+    {
+        Till till = new Till();
+
+        till.Scan("A");
+        till.Scan("B");
+        till.Scan("C");
+        till.Scan("D");
+        var totalPrice = till.GetTotalPrice();
+
+        Assert.Equal(115, totalPrice);
+    }
+    
+    [Fact]
+    public void CalculateTotalPrice_SingleDiscount()
+    {
+        Till till = new Till();
+
+        till.Scan("A");
+        till.Scan("B");
+        till.Scan("B");
+        till.Scan("D");
+        var totalPrice = till.GetTotalPrice();
+
+        Assert.Equal(110, totalPrice);
+
+    }
+
+    [Fact]
+    public void CalculateTotalPrice_TwoDiscountsInRandomOrder()
+    {
+        Till till = new Till();
+
+        till.Scan("A");
+        till.Scan("B");
+        till.Scan("A");
+        till.Scan("B");
+        till.Scan("A");
+        var totalPrice = till.GetTotalPrice();
+
+        Assert.Equal(175, totalPrice);
+    }
+
+    [Fact]
+    public void CalculateTotalPrice_EmptyShoppingBasket()
+    {
+        Till till = new Till();
+
+        var totalPrice = till.GetTotalPrice();
+
+        Assert.Equal(0, totalPrice);
+    }
+
+    [Fact]
+    public void CalculateTotalPrice_QuantityTooLowForDiscount()
+    {
+        Till till = new Till();
+
+        till.Scan("A");
+        till.Scan("A");
+        var totalPrice = till.GetTotalPrice();
+
+        Assert.Equal(100, totalPrice);
+    }
+    
+    [Fact]
+    public void CalculateTotalPrice_MoreThanEnoughForDiscount()
+    {
+        Till till = new Till();
+
+        till.Scan("A");
+        till.Scan("A");
+        till.Scan("A");
+        till.Scan("A");
+        var totalPrice = till.GetTotalPrice();
+
+        Assert.Equal(180, totalPrice);
+    }
 }
