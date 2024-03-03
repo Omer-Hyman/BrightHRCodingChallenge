@@ -18,10 +18,8 @@ public class UnitTests
         Till till = new Till();
 
         till.Scan("A");
-        
-        Assert.Equal(till.AvailableItems[0].Name, till.ShoppingBasket[0].Name);
-        Assert.Equal(till.AvailableItems[0].UnitPrice, till.ShoppingBasket[0].UnitPrice);
-        Assert.Equal(till.AvailableItems[0].SpecialPrice, till.ShoppingBasket[0].SpecialPrice);
+
+        Assert.Equal(till.AvailableItems[0], till.ShoppingBasket[0]);
         Assert.Single(till.ShoppingBasket);
     }
     
@@ -32,9 +30,7 @@ public class UnitTests
 
         till.Scan("D");
         
-        Assert.Equal(till.AvailableItems[3].Name, till.ShoppingBasket[0].Name);
-        Assert.Equal(till.AvailableItems[3].UnitPrice, till.ShoppingBasket[0].UnitPrice);
-        Assert.Equal(till.AvailableItems[3].SpecialPrice, till.ShoppingBasket[0].SpecialPrice);
+        Assert.Equal(till.AvailableItems[3], till.ShoppingBasket[0]);
         Assert.Single(till.ShoppingBasket);
     }
 
@@ -57,18 +53,9 @@ public class UnitTests
         till.Scan("B");
         till.Scan("C");
         
-        Assert.Equal(till.AvailableItems[0].Name, till.ShoppingBasket[0].Name);
-        Assert.Equal(till.AvailableItems[0].UnitPrice, till.ShoppingBasket[0].UnitPrice);
-        Assert.Equal(till.AvailableItems[0].SpecialPrice, till.ShoppingBasket[0].SpecialPrice);
-        
-        Assert.Equal(till.AvailableItems[1].Name, till.ShoppingBasket[1].Name);
-        Assert.Equal(till.AvailableItems[1].UnitPrice, till.ShoppingBasket[1].UnitPrice);
-        Assert.Equal(till.AvailableItems[1].SpecialPrice, till.ShoppingBasket[1].SpecialPrice);
-        
-        Assert.Equal(till.AvailableItems[2].Name, till.ShoppingBasket[2].Name);
-        Assert.Equal(till.AvailableItems[2].UnitPrice, till.ShoppingBasket[2].UnitPrice);
-        Assert.Equal(till.AvailableItems[2].SpecialPrice, till.ShoppingBasket[2].SpecialPrice);
-
+        Assert.Equal(till.AvailableItems[0], till.ShoppingBasket[0]);
+        Assert.Equal(till.AvailableItems[1], till.ShoppingBasket[1]);
+        Assert.Equal(till.AvailableItems[2], till.ShoppingBasket[2]);
         Assert.Equal(3, till.ShoppingBasket.Count);
     }
 
@@ -98,7 +85,6 @@ public class UnitTests
         var totalPrice = till.GetTotalPrice();
 
         Assert.Equal(110, totalPrice);
-
     }
 
     [Fact]

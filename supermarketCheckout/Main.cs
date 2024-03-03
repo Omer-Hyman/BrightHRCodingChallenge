@@ -132,6 +132,13 @@ public class Till : ICheckout
         else
             AvailableItems[itemIndex] = item;
     }
+
+    public void Testing()
+    {
+        Console.WriteLine("hello");
+        var input = Console.ReadLine();
+        Console.WriteLine(input);
+    }
 }
 
 public class Item
